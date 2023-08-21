@@ -1,0 +1,24 @@
+syntax = "proto3";
+package mvt.protocol;
+import "mvt_msg_geometry.proto";
+
+message Device {
+  enum TYPE {
+    None = 0;
+    IMU = 1;
+    Laser = 2;
+    Camera = 3;
+  }
+
+  string name = 1;
+  TYPE type = 2;
+  Pose install_info = 3;
+}
+
+message RobotInfo {
+  int64 time = 1;
+  string name = 2;
+  string map_name = 3;
+  repeated Device devices = 4;
+}
+

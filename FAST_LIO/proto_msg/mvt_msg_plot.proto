@@ -1,0 +1,52 @@
+syntax = "proto3";
+package mvt.protocol;
+
+import "mvt_msg_header.proto";
+import "mvt_msg_geometry.proto";
+
+message PlotCovariance {
+  PlotHeader header = 1;
+  Covariance cov = 2;
+}
+
+message PlotMatrix {
+  PlotHeader header = 1;
+  Matrix mat = 2;
+}
+
+message PlotCompoundManifold {
+  PlotHeader header = 1;
+  repeated string ids = 2;
+  repeated Matrix mats = 3;
+}
+
+message PlotLines {
+  PlotHeader header = 1;
+  repeated Line lines = 2;
+}
+
+message PlotPlane {
+  // 无效主要用于删除之前添加的平面
+  bool valid = 1;
+  // 唯一ID
+  int32 id = 2;
+  // 平面半径
+  float radius = 3;
+  // 点到平面距离平均误差
+  float dist_err = 4;
+  // 平面中心位置以及平面的朝向
+  Pose pose = 5;
+  // 平面方程系数：Ax + By + Cz + D = 0
+  repeated float coefficient = 6;
+  // 平面协方差
+  repeated float cov = 7;
+  // 平面颜色
+  repeated uint32 rgb = 8;
+  // 构成平面的点集 [(x, y, z),...,(x, y, z)]
+  repeated float points = 9;
+}
+
+message PlotPlanes {
+  PlotHeader header = 1;
+  repeated PlotPlane planes = 2;
+}

@@ -1,0 +1,14 @@
+syntax = "proto3";
+package pat.protocol;
+import "pat_msg_header.proto";
+
+message SrcLocationData {
+  ThreadInfo thread_info = 1;
+  // 使用静态变量的地址，保证唯一性
+  uint64 id = 2;
+  string zone_name = 3;
+  string func_name = 4;
+  string file_name = 5;
+  int32  line_num = 6;
+}
+

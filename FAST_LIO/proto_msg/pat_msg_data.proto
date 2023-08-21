@@ -1,0 +1,10 @@
+syntax = "proto3";
+package pat.protocol;
+
+message PlotData {
+  string name = 1;
+  int64  time = 2;
+  repeated double data = 3;
+}
+
+

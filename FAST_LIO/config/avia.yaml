@@ -1,0 +1,61 @@
+common:
+    lid_topic:  "/livox/lidar"
+    imu_topic:  "/livox/imu"
+    time_sync_en: false         # ONLY turn on when external time synchronization is really not possible
+    time_offset_lidar_to_imu: 0.0 # Time offset between lidar and IMU calibrated by other algorithms, e.g. LI-Init (can be found in README).
+                                  # This param will take effect no matter what time_sync_en is. So if the time offset is not known exactly, please set as 0.0
+
+preprocess:
+    lidar_type: 1                # 1 for Livox serials LiDAR, 2 for Velodyne LiDAR, 3 for ouster LiDAR, 4 MID360 LiDAR
+    scan_line: 6
+    blind: 4
+    maping_type: 0            #0 fast_lio的更新方式，1 voxel_map的更新方式
+
+mapping:
+    acc_cov: 0.1
+    gyr_cov: 0.1
+    b_acc_cov: 0.0001
+    c: 0.0001
+    fov_degree:    90
+    det_range:     450.0
+    extrinsic_est_en:  false      # true: enable the online estimation of IMU-LiDAR extrinsic
+    extrinsic_T: [ 0.04165, 0.02326, -0.0284 ]
+    extrinsic_R: [ 1, 0, 0,
+                   0, 1, 0,
+                   0, 0, 1]
+
+# -------- voxel_map
+voxel_map:
+    # 激光测量距离的标准差，单位m
+    ranging_sigma: 0.02
+    # 激光测量角度的标准差，单位deg
+    angle_sigma: 0.05
+    # 体素最大的边长，单位m
+    max_voxel_size: 3.2
+    # 体素的最大层数, 注意修改下面的each_layer_least_pts_num
+    # 实际层数从0开始计数到max_layer
+    max_layer: 3
+    # 不再更新平面协方差的点数门限
+    cov_fixed_pts_num: 200
+    # 不再更新平面的点数门限
+    plane_fixed_pts_num: 300
+    # 有效平面协方差最小特征值的门限
+    plane_min_eigen_value: 0.01
+    # 体素每层对应评估平面最少所需的点数
+    each_layer_least_pts_num: [ 10, 10, 10, 10, 10, 10, 10 ]
+    pub_voxel_map: true
+    publish_max_voxel_layer: 1         # only publish 0,1,2 layer's plane
+    pub_point_cloud: true
+    dense_map_enable: false
+    pub_point_cloud_skip: 5             # publish one points per five points
+
+publish:
+    path_en:  false
+    scan_publish_en:  true       # false: close all the point cloud output
+    dense_publish_en: true       # false: low down the points number in a global-frame point clouds scan.
+    scan_bodyframe_pub_en: true  # true: output the point cloud scans in IMU-body-frame
+
+pcd_save:
+    pcd_save_en: false
+    interval: -1                 # how many LiDAR frames saved in each pcd file; 
+                                 # -1 : all frames will be saved in ONE pcd file, may lead to memory crash when having too much frames.

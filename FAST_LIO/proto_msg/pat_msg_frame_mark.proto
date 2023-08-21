@@ -1,0 +1,14 @@
+syntax = "proto3";
+package pat.protocol;
+import "pat_msg_header.proto";
+
+
+message FrameMark {
+  Header header = 1;
+  string name = 2;
+  // CONTINUOUS = 0
+  // START = 1
+  // END = 2
+  uint32 type = 3;
+}
+

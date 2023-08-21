@@ -1,0 +1,13 @@
+syntax = "proto3";
+package pat.protocol;
+
+message TextMessage {
+  // 与SrcLocationData中的id相等
+  uint64 id = 1;
+  int64  time = 2;
+  // 用户自定义文本信息
+  string text = 3;
+  // 颜色 ABGR
+  uint32 color = 4;
+}
+

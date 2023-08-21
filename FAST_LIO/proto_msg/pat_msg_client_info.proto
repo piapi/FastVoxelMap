@@ -1,0 +1,28 @@
+syntax = "proto3";
+package pat.protocol;
+import "pat_msg_header.proto";
+import "pat_msg_src_location_data.proto";
+
+message ClientInfo {
+  Header header = 1;
+  // 客户端程序名称
+  string program_name = 2;
+  // 本包数据计数值对应的本地时间戳
+  uint64 epoch = 3;
+  // 初始化开始的计数器时间
+  int64  init_begin_time = 4;
+  // 初始化结束的计数器时间
+  int64  init_end_time = 5;
+  // 计数器系数
+  double timer_mul = 6;
+  // 计数器分辨率，需要乘以计数器系数得到需要配置频率系数转为纳秒数
+  uint32 timer_resolution = 7;
+  // 进程ID
+  uint64 pid = 8;
+}
+
+message ClientInitData {
+  repeated SrcLocationData src_loc_data = 1;
+  ClientInfo client_info = 2;
+}
+
