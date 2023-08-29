@@ -1,0 +1,2 @@
+# FastVoxelMap
+将FastLIO和VoxelMap进行了融合，可以切换建模的模式是fastlio还是采用voxelmap
